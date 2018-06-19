@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ArithmeticOperationsService } from '../arithmeticOperations.service';
 
 @Component({
   selector: 'app-calc',
@@ -8,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class CalcComponent implements OnInit {
 
   result: string = '0';
-  operationResult: number = 0;
   error: string = 'Error';
   hide: number = 0;
   operations = new Array<string>();
+
+  arithmeticOperations = new ArithmeticOperationsService();
 
   constructor() { }
 
@@ -41,17 +43,19 @@ export class CalcComponent implements OnInit {
           if(parts[1] === '0') {
             this.result += ' = ' + this.error;
           } else if(!(parts[1] === '')) {
-            this.operationResult = Number(parts[0]) / Number(parts[1]);
-            this.result += ' = ' + this.operationResult.toString();
-            this.addToArray();
+            this.result += ' = ' + this.arithmeticOperations.divide(Number(parts[0]), Number(parts[1]));
+            if(this.hide === 1) {
+              this.operations = this.arithmeticOperations.addToArray(this.operations, this.result);
+            }
           }
         }
       } else if(this.result.includes('*')) {
         parts = this.result.split(' * ');
         if(!(parts[1] === '')) {
-          this.operationResult = Number(parts[0]) * Number(parts[1]);
-          this.result += ' = ' + this.operationResult.toString();
-          this.addToArray();
+          this.result += ' = ' + this.arithmeticOperations.multiply(Number(parts[0]), Number(parts[1]));
+          if(this.hide === 1) {
+            this.operations = this.arithmeticOperations.addToArray(this.operations, this.result);
+          }
         }
       }
     }
@@ -68,12 +72,6 @@ export class CalcComponent implements OnInit {
   hideDiv() {
     this.hide = 0;
     this.operations = [];
-  }
-
-  addToArray() {
-    this.operations.reverse();
-    this.operations.push(this.result.toString());
-    this.operations.reverse();
   }
 
   buttonState() {
