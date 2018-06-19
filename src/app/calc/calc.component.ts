@@ -31,9 +31,9 @@ export class CalcComponent implements OnInit {
   addOperator(value: string) {
     if(!(this.result.includes('/') || this.result.includes('*'))) {
       this.result += ' ' + value + ' ';
-    } else if(this.result.includes('/')) {
+    } else if(this.result.includes('/') && !this.result.includes('=')) {
       this.result = this.result.replace('/', value);
-    } else if(this.result.includes('*')) {
+    } else if(this.result.includes('*') && !this.result.includes('=')) {
       this.result = this.result.replace('*', value);
     }
   }
