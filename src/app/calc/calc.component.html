@@ -1,0 +1,50 @@
+<!--
+<p>
+  calc works!
+</p>
+-->
+
+<div>
+  <div class="calculator">
+    <br>
+    <div class="resultCard">
+      {{result}}
+    </div>
+    <button (click)="addToScreen('1')">1</button>
+    <button (click)="addToScreen('2')">2</button>
+    <button (click)="addToScreen('3')">3</button>
+    <button (click)="clear()" (dblclick)="hideDiv()">C</button>
+    <button (click)="addOperator('*')">*</button>
+    <br>
+    <button (click)="addToScreen('4')">4</button>
+    <button (click)="addToScreen('5')">5</button>
+    <button (click)="addToScreen('6')">6</button>
+    <button (click)="showDiv()" [disabled]="buttonState()">H</button>
+    <button (click)="addOperator('/')">/</button>
+    <br>
+    <button (click)="addToScreen('7')">7</button>
+    <button (click)="addToScreen('8')">8</button>
+    <button (click)="addToScreen('9')">9</button>
+    <button (click)="addToScreen('0')">0</button>
+    <button (click)="showResult()">=</button>
+    <br>
+  </div>
+
+  <br>
+  <br>
+  <div>
+    <!--
+    <div *ngIf="hide > 0">
+      <p *ngFor="let element of operations">
+        {{ element }}
+      </p>
+    </div>
+    -->
+    <div class="card" *ngIf="hide > 0">
+        <p>HISTORY</p>
+      <div class="container" *ngFor="let element of operations">
+        <h4>{{element}}</h4>
+      </div>
+    </div>
+  </div>
+</div>
