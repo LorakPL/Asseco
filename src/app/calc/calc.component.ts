@@ -31,6 +31,10 @@ export class CalcComponent implements OnInit {
   addOperator(value: string) {
     if(!(this.result.includes('/') || this.result.includes('*'))) {
       this.result += ' ' + value + ' ';
+    } else if(this.result.includes('/')) {
+      this.result = this.result.replace('/', value);
+    } else if(this.result.includes('*')) {
+      this.result = this.result.replace('*', value);
     }
   }
 
@@ -39,15 +43,16 @@ export class CalcComponent implements OnInit {
       let parts;
       if(this.result.includes('/')) {
         parts = this.result.split(' / ');
-        if(parts.length > 1) {
-          if(parts[1] === '0') {
-            this.result += ' = ' + this.error;
-          } else if(!(parts[1] === '')) {
-            this.result += ' = ' + this.arithmeticOperations.divide(Number(parts[0]), Number(parts[1]));
-            if(this.hide === 1) {
-              this.operations = this.arithmeticOperations.addToArray(this.operations, this.result);
-            }
+        if(parts[1] === '0') {
+          this.result += ' = ' + this.error;
+          alert("You can't divide by 0");
+        } else if(!(parts[1] === '')) {
+          this.result += ' = ' + this.arithmeticOperations.divide(Number(parts[0]), Number(parts[1]));
+          if(this.hide === 1) {
+            this.operations = this.arithmeticOperations.addToArray(this.operations, this.result);
           }
+        } else {
+          alert("You must specified second number");
         }
       } else if(this.result.includes('*')) {
         parts = this.result.split(' * ');
@@ -56,8 +61,15 @@ export class CalcComponent implements OnInit {
           if(this.hide === 1) {
             this.operations = this.arithmeticOperations.addToArray(this.operations, this.result);
           }
+        } else {
+          alert("You must specified second number");
         }
       }
+      else {
+        alert("You must specified arithmetic operator");
+      }
+    } else {
+      alert("You should clear display");
     }
   }
 
